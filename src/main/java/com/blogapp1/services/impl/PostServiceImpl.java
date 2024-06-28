@@ -6,6 +6,7 @@ import com.blogapp1.reposiotry.PostRepository;
 import com.blogapp1.services.PostService;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -17,16 +18,28 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto createPost(PostDto postDto) {
+
+        Post post = MapToEntity(postDto);
+
+        Post savedPost = postRepository.save(post);
+
+        PostDto postDto1 = MapToEntity(savedPost);
+        return postDto1;
+    }
+
+    Post MapToEntity(PostDto postDto){
         Post post = new Post();
         post.setTitle(postDto.getTitle());
         post.setDescripation(postDto.getDescripation());
         post.setContent(postDto.getContent());
-        Post savedPost = postRepository.save(post);
+        return post;
+    }
 
+    PostDto MapToEntity(Post post){
         PostDto postDto1 = new PostDto();
-        postDto1.setTitle(savedPost.getTitle());
-        postDto1.setDescripation(savedPost.getDescripation());
-        postDto1.setContent(savedPost.getContent());
+        postDto1.setTitle(postDto1 .getTitle());
+        postDto1.setDescripation(postDto1 .getDescripation());
+        postDto1.setContent(postDto1 .getContent());
         return postDto1;
     }
 }
