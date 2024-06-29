@@ -10,6 +10,7 @@ public class PostDto {
     @NotEmpty
     @Size(min = 3, message = "title should be 3 character")
     private String title;
+    @NotEmpty
     private String description;
     private String content;
 }
