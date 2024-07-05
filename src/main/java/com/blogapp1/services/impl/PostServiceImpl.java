@@ -1,6 +1,7 @@
 package com.blogapp1.services.impl;
 
 import com.blogapp1.entity.Post;
+import com.blogapp1.payload.ListPostDto;
 import com.blogapp1.payload.PostDto;
 import com.blogapp1.reposiotry.PostRepository;
 import com.blogapp1.services.PostService;
@@ -44,13 +45,24 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> fetchAllPost(int pageNo, int pageSize, String sortBy) {
+    public ListPostDto fetchAllPost(int pageNo, int pageSize, String sortBy, String sortDir) {
 //        List<Post> post = postRepository.findAll();
-        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+                Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
         Page<Post> all = postRepository.findAll(pageable);
         List<Post> post = all.getContent();
         List<PostDto> posts = post.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
-        return posts;
+
+        ListPostDto listPostDto = new ListPostDto();
+        listPostDto.setPostDto(posts);
+        listPostDto.setTotalPages(all.getTotalPages());
+        listPostDto.setTotalElements((int) all.getTotalElements());
+        listPostDto.setFirstPage(all.isFirst());
+        listPostDto.setLastPage(all.isLast());
+        listPostDto.setPageNumber(all.getNumber());
+        return listPostDto;
     }
 
     Post MapToEntity(PostDto postDto){
