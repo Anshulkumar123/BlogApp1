@@ -7,6 +7,9 @@ import com.blogapp1.services.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -27,7 +30,7 @@ public class PostServiceImpl implements PostService {
 
         Post savedPost = postRepository.save(post);
 
-        PostDto postDto1 = MapToEntity(savedPost);
+        PostDto postDto1 = mapToDto(savedPost);
         return postDto1;
     }
 
@@ -36,12 +39,19 @@ public class PostServiceImpl implements PostService {
         postRepository.deleteById(id);
     }
 
+    @Override
+    public List<PostDto> fetchAllPost() {
+        List<Post> post = postRepository.findAll();
+        List<PostDto> posts = post.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
+        return posts;
+    }
+
     Post MapToEntity(PostDto postDto){
         Post post = modelMapper.map(postDto, Post.class);
         return post;
     }
 
-    PostDto MapToEntity(Post post){
+    PostDto mapToDto(Post post){
         PostDto postDto1 = modelMapper.map(post, PostDto.class);
         return postDto1;
     }
