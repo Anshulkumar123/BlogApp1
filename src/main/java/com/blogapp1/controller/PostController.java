@@ -37,13 +37,14 @@ public class PostController {
         return new ResponseEntity<>("Post is Deleted", HttpStatus.OK);
     }
 
-    //http://localhost:8080/api/posts?pageN0=0&paageSize=5
+    //http://localhost:8080/api/posts?pageN0=0&paageSize=5&sortBy=title
     @GetMapping
     public ResponseEntity<List<PostDto>> fetchAllPost(
             @RequestParam(name = "pageNo", defaultValue = "0", required = false) int pageNo,
-            @RequestParam(name = "pageSize", defaultValue = "5", required = false) int pageSize
+            @RequestParam(name = "pageSize", defaultValue = "5", required = false) int pageSize,
+            @RequestParam(name = "sortBy", defaultValue = "id", required = false) String sortBy
     ){
-        List<PostDto> postDtos = postService.fetchAllPost(pageNo, pageSize);
+        List<PostDto> postDtos = postService.fetchAllPost(pageNo, pageSize, sortBy);
         return new ResponseEntity<>(postDtos, HttpStatus.OK);
     }
 }

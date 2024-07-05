@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,9 +44,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> fetchAllPost(int pageNo, int pageSize) {
+    public List<PostDto> fetchAllPost(int pageNo, int pageSize, String sortBy) {
 //        List<Post> post = postRepository.findAll();
-        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
         Page<Post> all = postRepository.findAll(pageable);
         List<Post> post = all.getContent();
         List<PostDto> posts = post.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
