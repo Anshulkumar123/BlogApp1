@@ -37,9 +37,13 @@ public class PostController {
         return new ResponseEntity<>("Post is Deleted", HttpStatus.OK);
     }
 
+    //http://localhost:8080/api/posts?pageN0=0&paageSize=5
     @GetMapping
-    public ResponseEntity<List<PostDto>> fetchAllPost(){
-        List<PostDto> postDtos = postService.fetchAllPost();
+    public ResponseEntity<List<PostDto>> fetchAllPost(
+            @RequestParam(name = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(name = "pageSize", defaultValue = "5", required = false) int pageSize
+    ){
+        List<PostDto> postDtos = postService.fetchAllPost(pageNo, pageSize);
         return new ResponseEntity<>(postDtos, HttpStatus.OK);
     }
 }
