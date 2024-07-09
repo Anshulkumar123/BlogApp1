@@ -11,7 +11,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.provider.QueryComment;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -33,12 +35,18 @@ public class CommentServiceImpl implements CommentService {
         return dto;
     }
 
+    public List<CommentDto> getAllCommentsByPostId(long id){
+        List<Comment> comments = commentRepository.findByPostId(id);
+        List<CommentDto> dtos = comments.stream().map(c -> mapToDto(c)).collect(Collectors.toList());
+        return dtos;
+    }
+
     Comment mapToEntity(CommentDto dto){
         Comment comment = modelMapper.map(dto, Comment.class);
         return comment;
     }
 
     CommentDto mapToDto(Comment comment){
-       return modelMapper.map(comment, CommentDto.class);
+        return modelMapper.map(comment, CommentDto.class);
     }
 }
