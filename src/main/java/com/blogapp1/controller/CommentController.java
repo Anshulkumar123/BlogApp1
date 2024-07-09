@@ -1,6 +1,7 @@
 package com.blogapp1.controller;
 
 import com.blogapp1.payload.CommentDto;
+import com.blogapp1.payload.PostWithCommentDto;
 import com.blogapp1.services.CommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,8 +27,8 @@ public class CommentController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<List<CommentDto>> getAllCommentsByPostId(@PathVariable long postId){
-        List<CommentDto> commentDtos = commentService.getAllCommentsByPostId(postId);
-        return new ResponseEntity<>(commentDtos, HttpStatus.OK);
+    public ResponseEntity<PostWithCommentDto> getAllCommentsByPostId(@PathVariable long postId){
+        PostWithCommentDto allCommentsByPostId = commentService.getAllCommentsByPostId(postId);
+        return new ResponseEntity<>(allCommentsByPostId, HttpStatus.OK);
     }
 }
