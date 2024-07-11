@@ -9,4 +9,7 @@ public interface PostService {
     void deletePost(long id);
 
     ListPostDto fetchAllPost(int pageNo, int pageSize, String sortBy, String sortDir);
+
+    public PostDto getPostById(long id);
 }
+

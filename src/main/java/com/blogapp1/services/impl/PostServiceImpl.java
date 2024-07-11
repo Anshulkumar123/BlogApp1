@@ -1,6 +1,7 @@
 package com.blogapp1.services.impl;
 
 import com.blogapp1.entity.Post;
+import com.blogapp1.exception.ResourceNotFound;
 import com.blogapp1.payload.ListPostDto;
 import com.blogapp1.payload.PostDto;
 import com.blogapp1.reposiotry.PostRepository;
@@ -44,6 +45,7 @@ public class PostServiceImpl implements PostService {
         postRepository.deleteById(id);
     }
 
+
     @Override
     public ListPostDto fetchAllPost(int pageNo, int pageSize, String sortBy, String sortDir) {
 //        List<Post> post = postRepository.findAll();
@@ -64,6 +66,15 @@ public class PostServiceImpl implements PostService {
         listPostDto.setPageNumber(all.getNumber());
         return listPostDto;
     }
+
+    @Override
+    public PostDto getPostById(long id) {
+        Post post = postRepository.findById(id).orElseThrow(
+                ()-> new ResourceNotFound("Post Not found with id :"+ id)
+        );
+        return mapToDto(post);
+    }
+
 
     Post MapToEntity(PostDto postDto){
         Post post = modelMapper.map(postDto, Post.class);
