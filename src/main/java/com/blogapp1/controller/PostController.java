@@ -3,7 +3,7 @@ package com.blogapp1.controller;
 import com.blogapp1.payload.ListPostDto;
 import com.blogapp1.payload.PostDto;
 import com.blogapp1.services.PostService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;

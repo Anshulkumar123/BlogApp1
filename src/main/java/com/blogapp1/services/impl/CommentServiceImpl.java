@@ -10,7 +10,7 @@ import com.blogapp1.reposiotry.PostRepository;
 import com.blogapp1.services.CommentService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.jpa.provider.QueryComment;
+//import org.springframework.data.jpa.provider.QueryComment;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
