@@ -4,8 +4,11 @@ import com.blogapp1.payload.ListPostDto;
 import com.blogapp1.payload.PostDto;
 import com.blogapp1.services.PostService;
 import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +18,7 @@ import java.util.List;
 @RequestMapping("/api/posts")
 public class PostController {
     private PostService postService;
+
 
     public PostController(PostService postService) {
         this.postService = postService;
