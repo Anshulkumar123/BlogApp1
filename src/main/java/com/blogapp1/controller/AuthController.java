@@ -1,6 +1,7 @@
 package com.blogapp1.controller;
 
 import com.blogapp1.entity.User;
+import com.blogapp1.payload.LoginDto;
 import com.blogapp1.payload.Signup;
 import com.blogapp1.reposiotry.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class AuthController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
 
     //http://localhost:8080/api/auth/sign-up
     @PostMapping("/sign-up")
@@ -42,5 +44,10 @@ public class AuthController {
 
         return new ResponseEntity<>("user registered", HttpStatus.CREATED);
 
+    }
+
+    @PostMapping("/sign-in")
+    public ResponseEntity<String> signIn(@RequestBody LoginDto loginDto){
+        return null;
     }
 }
